@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from Image import Image
+from .Image import Image
 
 
 class UserBase(BaseModel):

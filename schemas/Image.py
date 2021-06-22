@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from User import User
+from .User import User
 
 
 class ImageBase(BaseModel):
