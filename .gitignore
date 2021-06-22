@@ -168,3 +168,5 @@ prime/
 stage/
 pip-wheel-metadata/
 .vim/
+#remove Pipfile
+Pipfile.lock
