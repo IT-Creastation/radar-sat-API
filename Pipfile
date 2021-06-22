@@ -9,6 +9,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 numpy = "*"
 sentinelsat = "*"
 python-dotenv = "*"
+sqlalchemy="*"
 
 [dev-packages]
 
