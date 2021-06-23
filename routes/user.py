@@ -8,10 +8,10 @@ from fastapi import APIRouter, Depends
 from models.User import User
 from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-router = APIRouter()
+router = APIRouter(tags=["users"])
 
 
-@router.post("/user", response_model=UserViewer, status_code=status.HTTP_201_CREATED, tags=["users"])
+@router.post("/user", response_model=UserViewer, status_code=status.HTTP_201_CREATED)
 def create_user(request: UserCreate, db: Session = Depends(get_db)):
     hashedPassword = pwd_context.hash(request.password)
     new_user = User(email=request.email, password=hashedPassword)
@@ -21,7 +21,7 @@ def create_user(request: UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-@router.get("/user/{id}", response_model=UserViewer, tags=["users"])
+@router.get("/user/{id}", response_model=UserViewer)
 def get_current_user(id: int, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == id).first()
     if user:
