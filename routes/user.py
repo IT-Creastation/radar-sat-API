@@ -1,12 +1,13 @@
-from fastapi.exceptions import HTTPException
+from fastapi import HTTPException
 from DB.database import get_db
 from sqlalchemy.orm.session import Session
 from schemas.User import UserCreate
 from starlette import status
 from schemas.Image import UserViewer
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends,HTTPException
 from models.User import User
 from passlib.context import CryptContext
+from services.auth_services import get_current_user
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 router = APIRouter(tags=["users"])
 
@@ -22,7 +23,7 @@ def create_user(request: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/user/{id}", response_model=UserViewer)
-def get_current_user(id: int, db: Session = Depends(get_db)):
+def get_current_user(id: int, db: Session = Depends(get_db),current_user:User=Depends(get_current_user)):
     user = db.query(User).filter(User.id == id).first()
     if user:
         return user

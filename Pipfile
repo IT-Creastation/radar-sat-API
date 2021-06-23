@@ -12,6 +12,7 @@ python-dotenv = "*"
 sqlalchemy="*"
 passlib = "*"
 bcrypt = "*"
+python-jose = "*"
 
 [dev-packages]
 flake8 = "*"
