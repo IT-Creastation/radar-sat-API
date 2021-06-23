@@ -170,3 +170,5 @@ pip-wheel-metadata/
 .vim/
 #remove Pipfile
 Pipfile.lock
+#remove DB
+DB/radar.db

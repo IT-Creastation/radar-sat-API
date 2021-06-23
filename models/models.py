@@ -1,3 +1,0 @@
-
-class Pass():
-    pass

@@ -1,21 +1,18 @@
 from typing import List
 from pydantic import BaseModel
 
-from .Image import Image
 
 
 class UserBase(BaseModel):
-    username: str
+    email: str
 
 
 class UserCreate(UserBase):
     password: str
 
 
-class User(UserBase):
-    id: int
-
-    images: List[Image] = []
-
+class ShowUser(UserBase):
     class Config:
         orm_mode = True
+
+

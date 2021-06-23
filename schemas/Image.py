@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-
-from .User import User
+from typing import List
 
 
 class ImageBase(BaseModel):
@@ -14,8 +13,14 @@ class ImageCreate(ImageBase):
 
 class Image(ImageBase):
     id: int
-
-    user: User
-
+    path:str
+    user_id: int
+    name:str
+    class Config:
+        orm_mode = True
+class UserViewer(BaseModel):
+    id: int
+    email:str
+    images: List[Image] = []
     class Config:
         orm_mode = True
