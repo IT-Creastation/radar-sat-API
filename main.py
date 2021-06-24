@@ -3,11 +3,7 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from passlib.context import CryptContext
 from DB.database import Base, engine
-from routes import image, user, auth
-import uvicorn
-
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from routes import image, user, auth, user_images
 
 load_dotenv()
 
@@ -21,6 +17,7 @@ app = FastAPI()
 app.include_router(auth.router)
 app.include_router(image.router)
 app.include_router(user.router)
+app.include_router(user_images.router)
 
 
 if __name__ == '__main__':

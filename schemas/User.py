@@ -1,7 +1,5 @@
 from typing import List,Optional
 from pydantic import BaseModel
-from sqlalchemy.sql.selectable import lateral
-
 
 
 class UserBase(BaseModel):
@@ -13,11 +11,8 @@ class UserCreate(UserBase):
 class patchUser(BaseModel):
     pass
 class putUser(BaseModel):
-   
-
     pass
+
 class ShowUser(UserBase):
     class Config:
         orm_mode = True
-
-
