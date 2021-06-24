@@ -1,21 +1,36 @@
-from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
-from datetime import date
-from collections import OrderedDict
-import os
+from sentinelsat import SentinelAPI, geojson_to_wkt
 from pathlib import Path
-from fastapi import Response, status
-from starlette import responses
+import os
+
 PASSWORD = "9Auy@qznE!LbxQL"
 NAME = "creastation"
+api = SentinelAPI(NAME, PASSWORD)
 
 
-def handleImage(date: str, location: dict, cloudCoverage: float, userId: int,platformname:str="Sentinel-1"):
+def download_image(userId: int, imageId: int, imageTitle: str):
     """
     This function take six arguments:
+    userId:(type: integer) current user id
+    imageId:(type: integer) id of the image would you download
+    imageTitle:(type: string) title of the image would you download
+    """
+    path = f"./DB/images/{userId}"
+    imageName = f"{imageTitle}.zip"
+    Path(path).mkdir(parents=True, exist_ok=True)
+    data = api.get_stream(imageId)
+    print(os.path.dirname(__file__))
+    print(os.path.join(os.path.dirname(__file__),f"/DB/images/{str(userId)}/{imageName}"))
+    with open(os.path.join(os.path.dirname(__file__),f"/DB/images/{str(userId)}/{imageName}"), "wb") as f:
+        f.write(data.content)
+    return {"path": path.replace("./", ""), "imageName": imageName}
+
+
+def handle_image_information(date: str, location: dict, cloudCoverage: float, platformname: str = "Sentinel-1", ):
+    """
+    This function take 4 arguments:
     date: (type: string) min date intervale
     location: (tye: dictionary) containing two keys longitude and latitude (type: float).
     cloudCoverage:(type: float) pourcentage of cloud coverage of the image looked for.
-    userName:(type: string) current user name
     platformname:(type: string) choose the platform which you want to downlow sat images from.
     for example:
          Sentinel-1
@@ -24,9 +39,7 @@ def handleImage(date: str, location: dict, cloudCoverage: float, userId: int,pla
          Sentinel-4
     default Sentinel-1
     """
-    api = SentinelAPI(NAME, PASSWORD)
     area = {
-
         "type": "Point",
         "coordinates": [
             location["lon"],
@@ -38,14 +51,14 @@ def handleImage(date: str, location: dict, cloudCoverage: float, userId: int,pla
         0, cloudCoverage), orbitdirection='DESCENDING', limit=1, platformname=platformname)
     if result:
         id = list(result.keys())[0]
-        path = f"./DB/images/{userId}"
-        imageName = result[id]["title"]+".jpeg"
-        Path(path).mkdir(parents=True, exist_ok=True)
-        api.download_quicklook(id, path)
-        return {"path": path.replace("./",""), "imageName": imageName}
-
+        iterator = dict(result[id])
+        res = {key: iterator[key] for key in iterator.keys() and {
+            "summary", "title", "platformname", "size", "cloudcoverpercentage"}}
+        return {**res, "id": id}
     else:
         raise Exception("we couldn't find image for the given criteria")
 
 
-# print(handleImage("20151202", {"lon": -5, "lat": 39}, 15, 20))
+# result = handle_image_information("20001202", {"lon": -5, "lat": 36.44}, 100,platformname="Sentinel-3")
+# print(result)
+# print(download_image(1, result["id"], result["title"]))

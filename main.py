@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-# import uvicorn
 from dotenv import load_dotenv
 from passlib.context import CryptContext
 from DB.database import Base, engine
 from routes import image, user, auth
 import uvicorn
-
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

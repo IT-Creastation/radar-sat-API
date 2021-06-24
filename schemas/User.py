@@ -1,6 +1,5 @@
 from typing import List,Optional
 from pydantic import BaseModel
-from sqlalchemy.sql.selectable import lateral
 
 
 
