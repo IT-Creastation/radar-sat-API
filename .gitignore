@@ -172,3 +172,4 @@ pip-wheel-metadata/
 Pipfile.lock
 #remove DB
 DB/radar.db
+DB/images
