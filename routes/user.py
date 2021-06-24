@@ -43,6 +43,11 @@ def update_email_or_password(id: int, db: Session = Depends(get_db), current_use
 
 @router.delete("/", response_model=UserViewer)
 def delete_account(id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    pass
+
+
+@router.get("/user/{id}", response_model=UserViewer)
+def get_current_user(id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     user = db.query(User).filter(User.id == id).first()
     if user:
         return user
