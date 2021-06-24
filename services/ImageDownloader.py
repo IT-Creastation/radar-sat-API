@@ -19,8 +19,7 @@ def download_image(userId: int, imageId: int, imageTitle: str):
     Path(path).mkdir(parents=True, exist_ok=True)
     data = api.get_stream(imageId)
     print(os.path.dirname(__file__))
-    print(os.path.join(os.path.dirname(__file__),f"/DB/images/{str(userId)}/{imageName}"))
-    with open(os.path.join(os.path.dirname(__file__),f"/DB/images/{str(userId)}/{imageName}"), "wb") as f:
+    with open(Path(f"./DB/images/{str(userId)}/{imageName}"), "wb") as f:
         f.write(data.content)
     return {"path": path.replace("./", ""), "imageName": imageName}
 
@@ -57,8 +56,6 @@ def handle_image_information(date: str, location: dict, cloudCoverage: float, pl
         return {**res, "id": id}
     else:
         raise Exception("we couldn't find image for the given criteria")
-
-
-# result = handle_image_information("20001202", {"lon": -5, "lat": 36.44}, 100,platformname="Sentinel-3")
-# print(result)
-# print(download_image(1, result["id"], result["title"]))
+result = handle_image_information("20001202", {"lon": -5, "lat": 36.44}, 100,platformname="Sentinel-3")
+print(result)
+print(download_image(1, result["id"], result["title"]))

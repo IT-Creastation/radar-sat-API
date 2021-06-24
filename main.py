@@ -4,8 +4,8 @@ from passlib.context import CryptContext
 from DB.database import Base, engine
 import uvicorn
 from routes import image, user, auth, user_images
+from services.imageDownloader import handle_image_information,download_image 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 
 
