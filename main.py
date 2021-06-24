@@ -8,7 +8,8 @@ from schemas.Image import UserViewer
 from models.User import User
 from models.Image import Image
 from passlib.context import CryptContext
-from routes import image, user,auth
+from routes import image, user, auth
+import uvicorn
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 load_dotenv()
 Base.metadata.create_all(bind=engine)
@@ -16,7 +17,6 @@ app = FastAPI()
 app.include_router(auth.router)
 app.include_router(image.router)
 app.include_router(user.router)
-
 
 
 # if __name__ == '__main__':

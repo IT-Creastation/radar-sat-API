@@ -9,14 +9,20 @@ PASSWORD = "9Auy@qznE!LbxQL"
 NAME = "creastation"
 
 
-def handleImage(date: str, location: dict, cloudCoverage: float, userId: int):
+def handleImage(date: str, location: dict, cloudCoverage: float, userId: int,platformname:str="Sentinel-1"):
     """
     This function take six arguments:
     date: (type: string) min date intervale
     location: (tye: dictionary) containing two keys longitude and latitude (type: float).
     cloudCoverage:(type: float) pourcentage of cloud coverage of the image looked for.
     userName:(type: string) current user name
-
+    platformname:(type: string) choose the platform which you want to downlow sat images from.
+    for example:
+         Sentinel-1
+         Sentinel-2
+         Sentinel-3
+         Sentinel-4
+    default Sentinel-1
     """
     api = SentinelAPI(NAME, PASSWORD)
     area = {
@@ -29,7 +35,7 @@ def handleImage(date: str, location: dict, cloudCoverage: float, userId: int):
 
     area = geojson_to_wkt(area)
     result = api.query(area=area, date=(date, "NOW"), order_by="cloudcoverpercentage", cloudcoverpercentage=(
-        0, cloudCoverage), orbitdirection='DESCENDING', limit=1, platformname='Sentinel-3')
+        0, cloudCoverage), orbitdirection='DESCENDING', limit=1, platformname=platformname)
     if result:
         id = list(result.keys())[0]
         path = f"./DB/images/{userId}"
@@ -42,4 +48,4 @@ def handleImage(date: str, location: dict, cloudCoverage: float, userId: int):
         raise Exception("we couldn't find image for the given criteria")
 
 
-print(handleImage("20151202", {"lon": -5, "lat": 39}, 15, 20))
+# print(handleImage("20151202", {"lon": -5, "lat": 39}, 15, 20))

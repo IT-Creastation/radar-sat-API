@@ -1,3 +1,5 @@
+from schemas.User import UserCreate
+from schemas.Image import UserViewer
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from services.auth_services import create_access_token
 from starlette import status
@@ -29,3 +31,12 @@ def login(request: OAuth2PasswordRequestForm=Depends(), db: Session = Depends(ge
 
     raise HTTPException(
         status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid credentials")
+
+@router.post("/user", response_model=UserViewer, status_code=status.HTTP_201_CREATED)
+def create_user(request: UserCreate, db: Session = Depends(get_db)):
+    hashedPassword = pwd_context.hash(request.password)
+    new_user = User(email=request.email, password=hashedPassword)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
