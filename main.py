@@ -1,22 +1,22 @@
-from DB.database import Base, get_db, engine
-from fastapi import FastAPI, Depends, status, HTTPException
+from fastapi import FastAPI
 # import uvicorn
 from dotenv import load_dotenv
-from sqlalchemy.orm import Session
-from schemas.User import UserCreate
-from schemas.Image import UserViewer
-from models.User import User
-from models.Image import Image
 from passlib.context import CryptContext
-from routes import image, user,auth
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from DB.database import Base, engine
+from routes import image, user, auth
+
 load_dotenv()
+
 Base.metadata.create_all(bind=engine)
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 app = FastAPI()
+
+# Registering routes
 app.include_router(auth.router)
 app.include_router(image.router)
 app.include_router(user.router)
-
 
 
 # if __name__ == '__main__':
