@@ -14,6 +14,7 @@ passlib = "*"
 bcrypt = "*"
 python-jose = "*"
 python-multipart = "*"
+schedule = "*"
 
 [dev-packages]
 flake8 = "*"

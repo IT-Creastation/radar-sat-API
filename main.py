@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from DB.database import Base, engine
 import uvicorn
 from routes import image, user, auth, user_images
-from services.imageDownloader import handle_image_information,download_image 
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
@@ -22,7 +22,8 @@ app.include_router(auth.router)
 app.include_router(image.router)
 app.include_router(user.router)
 app.include_router(user_images.router)
+ 
 
+# if __name__ == '__main__':
+#     uvicorn.run('main:app', host='127.0.0.1', port=8000)
 
-if __name__ == '__main__':
-    uvicorn.run('main:app', host='127.0.0.1', port=8000)

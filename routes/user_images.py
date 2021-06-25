@@ -14,7 +14,7 @@ from sqlalchemy.exc import IntegrityError
 router = APIRouter(
     prefix="/users",
     dependencies=[Depends(get_current_user)],
-    tags=["UserImages"]
+    tags=["User images"]
 )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
