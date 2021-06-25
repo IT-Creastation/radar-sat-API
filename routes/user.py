@@ -11,7 +11,7 @@ from services.auth_services import get_current_user
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 router = APIRouter(tags=["users"],
-                   prefix="/user")
+                   prefix="/users")
 
 
 @router.get("/", response_model=UserViewer)
