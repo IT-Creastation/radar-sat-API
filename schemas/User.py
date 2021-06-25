@@ -1,16 +1,28 @@
-from typing import List,Optional
+from typing import Optional
 from pydantic import BaseModel
+
+
 class UserBase(BaseModel):
     email: str
+    latitude: float = None
+    longitude: float = None
+    cloud_coverage: int = None
+
 
 class UserCreate(UserBase):
     password: str
 
-class patchUser(BaseModel):
-    pass
-class putUser(BaseModel):
+
+class PatchUser(BaseModel):
     pass
 
+
+class PutUser(UserBase):
+    pass
+
+
 class ShowUser(UserBase):
+    id: int
+
     class Config:
         orm_mode = True
