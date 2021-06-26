@@ -19,6 +19,7 @@ schedule = "*"
 [dev-packages]
 flake8 = "*"
 pylint = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.9"
