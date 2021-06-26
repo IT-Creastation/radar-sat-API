@@ -20,8 +20,10 @@ app.include_router(auth.router)
 app.include_router(image.router)
 app.include_router(user.router)
 app.include_router(user_images.router)
+
 app.include_router(user_config.router)
 
 
 if __name__ == '__main__':
     uvicorn.run('main:app', host='127.0.0.1', port=8000)
+
