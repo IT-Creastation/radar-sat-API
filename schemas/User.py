@@ -1,12 +1,14 @@
 from pydantic import BaseModel
 
+from typing import Optional
 
 class UserBase(BaseModel):
-    email: str
+    email: Optional[str]
     satellite: str = None
     latitude: float = None
     longitude: float = None
     cloud_coverage: int = None
+    download_image_from: str = None
 
 
 class UserCreate(UserBase):

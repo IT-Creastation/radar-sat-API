@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -7,15 +8,12 @@ class ImageBase(BaseModel):
 
 
 class ImageCreate(ImageBase):
-    pass
+    product_id: str
 
 
-class Image(ImageBase):
+class Image(ImageCreate):
     id: int
-    path: str
     user_id: int
-    name: str
     is_downloaded: bool
-
     class Config:
         orm_mode = True

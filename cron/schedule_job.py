@@ -12,7 +12,7 @@ def job():
     except Exception as ex:
         print(ex)
 
-schedule.every(15).seconds.do(job)
+schedule.every(5).seconds.do(job)
 
 # schedule.every().day.at("10:30").do(job)
 

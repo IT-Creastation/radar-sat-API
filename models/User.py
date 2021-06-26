@@ -12,7 +12,7 @@ class User(Base):
 
     # TODO: satellite should be an enum instead of String :p
     satellite = Column(String)
-
+    download_image_from = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
     cloud_coverage = Column(Integer)

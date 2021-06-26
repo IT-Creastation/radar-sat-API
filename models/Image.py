@@ -14,5 +14,5 @@ class Image(Base):
     is_downloaded = Column(Boolean, default=False)
 
     user_id = Column(Integer, ForeignKey("users.id"))
-
+    product_id=Column(String, unique=True)
     user = relationship("User", back_populates="images")

@@ -59,3 +59,11 @@ def store_user_image(db: Session, request: ImageCreate, user_id):
     db.refresh(image)
     return image
 
+def update_image_status(db: Session, id: int, status: bool):
+    image = db.query(ImageModel).filter(ImageModel.id == id).first()
+    image.is_downloaded = status
+    db.commit()
+    db.refresh(image)
+
+    return image
+

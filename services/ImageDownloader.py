@@ -18,25 +18,25 @@ def download_image(userId: int, imageId: int, imageTitle: str):
     imageName = f"{imageTitle}.zip"
     Path(path).mkdir(parents=True, exist_ok=True)
     data = api.get_stream(imageId)
-    print(os.path.dirname(__file__))
     with open(Path(f"./DB/images/{str(userId)}/{imageName}"), "wb") as f:
         f.write(data.content)
-    return {"path": path.replace("./", ""), "imageName": imageName}
+    return {"path": path.replace("./", ""), "name": imageName}
 
 
 def handle_image_information(
             date: str,
             location: dict,
             cloudCoverage: float,
-            platformname: str = "Sentinel-1"
+            userId:int,
+            platformname: str = "Sentinel-1",
+
         ):
     """
     This function take 4 arguments:
 
-    date: (type: string) min date intervale
-
-    location: (tye: dictionary) containing two keys
-                longitude and latitude (type: float).
+    date: (type: string) min date intervale YYYYMMDD
+    location: (type: dictionary) containing two keys
+                lon and lat (type: float).
 
     cloudCoverage: (type: float) pourcentage of cloud
                       coverage of the image looked for.
@@ -67,7 +67,7 @@ def handle_image_information(
                     orbitdirection='DESCENDING',
                     limit=1,
                     platformname=platformname)
-
+    
     if result:
         id = list(result.keys())[0]
         iterator = dict(result[id])
@@ -81,7 +81,7 @@ def handle_image_information(
                         "cloudcoverpercentage"
                     }
                 }
-
-        return {**res, "id": id}
+   
+        return {**res, "id": id,"path":f"./DB/images/{userId}/{res['title']}.zip"}
     else:
         raise Exception("we couldn't find image for the given criteria")

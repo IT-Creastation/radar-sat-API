@@ -17,10 +17,8 @@ router = APIRouter(
 def login(
         request: OAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_db)):
-
+        
     user = db.query(User).filter(User.email == request.username).first()
-    print(user.password)
-    print(request.password)
     if user:
         if pwd_context.verify(request.password, user.password):
             access_token = create_access_token(
@@ -39,9 +37,9 @@ def login(
 
 
 @router.post(
-        "/user",
-        response_model=ShowUser,
-        status_code=status.HTTP_201_CREATED)
+    "/user",
+    response_model=ShowUser,
+    status_code=status.HTTP_201_CREATED)
 def create_user(request: UserCreate, db: Session = Depends(get_db)):
     hashedPassword = pwd_context.hash(request.password)
     new_user = User(email=request.email, password=hashedPassword)
