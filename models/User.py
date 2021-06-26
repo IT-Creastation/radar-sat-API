@@ -10,6 +10,9 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     password = Column(String)
 
+    # TODO: satellite should be an enum instead of String :p
+    satellite = Column(String)
+
     latitude = Column(Float)
     longitude = Column(Float)
     cloud_coverage = Column(Integer)
