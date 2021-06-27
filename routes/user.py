@@ -19,6 +19,9 @@ router = APIRouter(tags=["Users"],
 
 @router.get("/", response_model=List[ShowUser])
 def get_all_users(db: Session = Depends(get_db)):
+    """
+    Get all users, for admin managing perposes
+    """
     users = []
 
     try:
@@ -35,6 +38,9 @@ def get_user_by_id(
                 id: int,
                 db: Session = Depends(get_db)
             ):
+    """
+    Get one user, for admin managing perposes
+    """
     try:
         user = db.query(User).filter(User.id == id).first()
     except Exception:
@@ -50,7 +56,9 @@ def update_user(
                         request: PutUser,
                         db: Session = Depends(get_db),
                     ):
-
+    """
+    update user information, this endpoint is used for seting user config too. 
+    """
     user = UserService.update(db, id, request)
 
     if user:
@@ -61,10 +69,14 @@ def update_user(
 
 
 @router.delete("/{id}")
+
 def delete_user(
                 id: int,
                 db: Session = Depends(get_db)
             ):
+    """
+    delete user account
+    """
     try:
         UserService.delete(db, id)
     except Exception as e:
