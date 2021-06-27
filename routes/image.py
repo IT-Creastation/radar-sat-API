@@ -26,6 +26,11 @@ def get_images(db: Session = Depends(get_db)):
 
 @router.get("/{name}/download", response_class=FileResponse)
 def dowload_image(name: str, db: Session = Depends(get_db)):
+    """
+    <h5>Download one image by giving the API the name of the image which you would like download</h5>
+    <p style="margin-left:5%">It require one parametre {name} as string which represent the image name that you want to download, <br/>
+    the response is a file with extession {name}.zip</p>
+    """
     try:
         image = db.query(Image).filter(Image.name == name).first()
         print(image)

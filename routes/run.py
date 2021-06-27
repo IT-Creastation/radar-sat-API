@@ -10,7 +10,7 @@ router = APIRouter(prefix="/run")
 @router.post("/")
 def handle_cron_request(db: Session = Depends(get_db)):
     """
-    TODO:docs
+    
     """
     errors = []
     try:

@@ -2,14 +2,16 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from DB.database import Base, engine
 import uvicorn
-from routes import image, user, auth, user_images, user_config,run
+from routes import image, user, auth, user_images,run
 
 
 load_dotenv()
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="sat-image-api",
+    description="This api provide a service of downloading free Sentinel satelite images for free, and support 4 first platform of sentinel",
+    version="1.0.0",)
 
 # Registering routes
 app.include_router(auth.router)
@@ -17,7 +19,6 @@ app.include_router(image.router)
 app.include_router(user.router)
 app.include_router(user_images.router)
 app.include_router(run.router)
-app.include_router(user_config.router)
 
 
 if __name__ == '__main__':

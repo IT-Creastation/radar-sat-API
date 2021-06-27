@@ -17,7 +17,15 @@ router = APIRouter(
 def login(
         request: OAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_db)):
-        
+    """
+    <h5>Authentication</h5>
+    <p>The sat-image-api provide a high level authentication security based on Oauth2, first you must create a user account via this <a href="/docs#/authentication/create_user_user_post">endpoint</a> or read the doc how to <a href="/redoc#operation/create_user_user_post">create use</a> </p>
+    <hr/>
+    <h5>username :</h5>
+    <p style="margin-left:5%">(String,Required):Your name provided when you have created a new account</p>
+    <h5>password :</h5>
+    <p style="margin-left:5%">(String,Required):Your account password </p>
+    """    
     user = db.query(User).filter(User.email == request.username).first()
     if user:
         if pwd_context.verify(request.password, user.password):
@@ -41,6 +49,14 @@ def login(
     response_model=ShowUser,
     status_code=status.HTTP_201_CREATED)
 def create_user(request: UserCreate, db: Session = Depends(get_db)):
+    """
+    <p>The RADAR_API provide a high level authentication security based on Oauth2, first you must create a user account via this <a href="/docs#/authentication/create_user_user_post">endpoint</a> or read the doc how to <a href="/redoc#operation/create_user_user_post">create use</a> </p>
+    <hr/>
+    <h5>username :</h5>
+    <p style="margin-left:5%">(String,Required):Your account username, we reccomend you to use your real email</p>
+    <h5>password :</h5>
+    <p style="margin-left:5%">(String,Required):Your password, we recommend to use a strong password and at least 6 characters</p>
+    """
     hashedPassword = pwd_context.hash(request.password)
     new_user = User(email=request.email, password=hashedPassword)
     db.add(new_user)
