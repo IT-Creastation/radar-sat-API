@@ -2,8 +2,8 @@ from sentinelsat import SentinelAPI, geojson_to_wkt
 from pathlib import Path
 import os
 
-PASSWORD = "9Auy@qznE!LbxQL"
-NAME = "creastation"
+PASSWORD = os.getenv("PASSWORD")
+NAME = os.getenv("NAME")
 api = SentinelAPI(NAME, PASSWORD)
 
 

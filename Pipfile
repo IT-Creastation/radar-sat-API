@@ -15,6 +15,7 @@ bcrypt = "*"
 python-jose = "*"
 python-multipart = "*"
 schedule = "*"
+aiofiles = "*"
 
 [dev-packages]
 flake8 = "*"

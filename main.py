@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from DB.database import Base, engine
 import uvicorn
 from routes import image, user, auth, user_images,run
-
+import os
 
 load_dotenv()
 
@@ -22,4 +22,4 @@ app.include_router(run.router)
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host='127.0.0.1', port=8000)
+    uvicorn.run('main:app', host='127.0.0.1', port=os.getenv("PORT"))
