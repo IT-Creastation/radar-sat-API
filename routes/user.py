@@ -35,9 +35,9 @@ def get_all_users(db: Session = Depends(get_db)):
 
 @router.get("/{id}", response_model=ShowUser)
 def get_user_by_id(
-                id: int,
-                db: Session = Depends(get_db)
-            ):
+    id: int,
+    db: Session = Depends(get_db)
+):
     """
     Get one user, for admin managing perposes
     """
@@ -52,12 +52,27 @@ def get_user_by_id(
 
 @router.patch("/{id}", response_model=ShowUser)
 def update_user(
-                        id: int,
-                        request: PutUser,
-                        db: Session = Depends(get_db),
-                    ):
+    id: int,
+    request: PutUser,
+    db: Session = Depends(get_db),
+):
     """
-    update user information, this endpoint is used for seting user config too. 
+    update user information, this endpoint is used for seting user config too.
+    date: (type: string) min date intervale YYYYMMDD
+    location: (type: dictionary) containing two keys
+                lon and lat (type: float).
+
+    cloudCoverage: (type: float) pourcentage of cloud
+                      coverage of the image looked for.
+
+    platformname: (type: string) choose the platform which
+                    you want to downlow sat images from.
+                    for example:
+                         Sentinel-1
+                         Sentinel-2
+                         Sentinel-3
+                         Sentinel-4
+                    default Sentinel-1
     """
     user = UserService.update(db, id, request)
 
@@ -69,11 +84,10 @@ def update_user(
 
 
 @router.delete("/{id}")
-
 def delete_user(
-                id: int,
-                db: Session = Depends(get_db)
-            ):
+    id: int,
+    db: Session = Depends(get_db)
+):
     """
     delete user account
     """
