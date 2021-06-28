@@ -15,20 +15,23 @@ def handle_cron_request(db: Session = Depends(get_db)):
     Left exposed for now for testing purposes
     """
     errors = []
+    downloaded = []
     try:
         users = index(db)
         print("lqkfsdj")
         print(users)
         for user in users:
-            info = handle_image_information(
-                user.download_image_from,
-                {"lon": user.longitude, "lat": user.latitude},
-                user.cloud_coverage,
-                userId=user.id,
-                platformname=user.satellite)
             try:
-                store_user_image(db, ImageCreate(
-                    path=info["path"], name=info["title"], product_id=info["id"]), user_id=user.id)
+                info = handle_image_information(
+                    user.download_image_from,
+                    {"lon": user.longitude, "lat": user.latitude},
+                    user.cloud_coverage,
+                    userId=user.id,
+                    platformname=user.satellite)
+                downloaded.append(info)
+            #try:
+            #    store_user_image(db, ImageCreate(
+            #        path=info["path"], name=info["title"], product_id=info["id"]), user_id=user.id)
             except Exception as ex:
                 errors.append(ex)
                 continue
