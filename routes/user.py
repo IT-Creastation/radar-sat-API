@@ -20,7 +20,7 @@ router = APIRouter(tags=["Users"],
 @router.get("/", response_model=List[ShowUser])
 def get_all_users(db: Session = Depends(get_db)):
     """
-    Get all users, for admin managing perposes
+    Get all users, for admin managing purposes
     """
     users = []
 
@@ -39,7 +39,7 @@ def get_user_by_id(
     db: Session = Depends(get_db)
 ):
     """
-    Get one user, for admin managing perposes
+    Get one user, for admin managing purposes
     """
     try:
         user = db.query(User).filter(User.id == id).first()
@@ -57,13 +57,18 @@ def update_user(
     db: Session = Depends(get_db),
 ):
     """
-    update user information, this endpoint is used for seting user config too.
-    date: (type: string) min date intervale YYYYMMDD
-    location: (type: dictionary) containing two keys
-                lon and lat (type: float).
+    Update user information, this endpoint is used for setting user config too.
+    
+    date: (type: string) date from which the search is done 
+                        FORMAT: YYYYMMDD
+                        EXAMPLE: 20150212
 
-    cloudCoverage: (type: float) pourcentage of cloud
-                      coverage of the image looked for.
+    location: (type: dictionary) containing two keys
+                lon and lat of type float.
+                EXAMPLE {lon: "-5", lat: "39.14"}
+
+    cloudCoverage: (type: float) percentage of cloud
+                      coverage of images.
 
     platformname: (type: string) choose the platform which
                     you want to downlow sat images from.
@@ -72,6 +77,7 @@ def update_user(
                          Sentinel-2
                          Sentinel-3
                          Sentinel-4
+                         
                     default Sentinel-1
     """
     user = UserService.update(db, id, request)
