@@ -16,7 +16,13 @@ def job():
         print(ex)
 
 
-schedule.every().day.at("07:00").do(job)
+TESTING = True
+
+
+if TESTING:
+    schedule.every(5).seconds.do(job)
+else:
+    schedule.every().day.at("07:00").do(job)
 
 
 while True:

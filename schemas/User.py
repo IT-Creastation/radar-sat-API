@@ -11,7 +11,7 @@ class UserCreate(UserBase):
     password: str
 
 
-class PatchUser(BaseModel):
+class PatchUser(UserBase):
     satellite: str = None
     latitude: float = None
     longitude: float = None

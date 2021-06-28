@@ -71,13 +71,13 @@ def update_user(
                       coverage of images.
 
     platformname: (type: string) choose the platform which
-                    you want to downlow sat images from.
-                    for example:
-                         Sentinel-1
-                         Sentinel-2
-                         Sentinel-3
-                         Sentinel-4
-                         
+                    you want to downlow sat images from.</br>
+                     for example:</br>
+                         Sentinel-1</br>
+                         Sentinel-2</br>
+                         Sentinel-3</br>
+                         Sentinel-4</br>
+
                     default Sentinel-1
     """
     user = UserService.update(db, id, request)

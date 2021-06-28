@@ -10,11 +10,14 @@ router = APIRouter(prefix="/run")
 @router.post("/")
 def handle_cron_request(db: Session = Depends(get_db)):
     """
-    
+    This endpoints triggers automatic download of users' images,
+    shouldn't be used by clients.
+    Left exposed for now for testing purposes
     """
     errors = []
     try:
         users = index(db)
+        print("lqkfsdj")
         print(users)
         for user in users:
             info = handle_image_information(

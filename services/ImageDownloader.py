@@ -59,7 +59,8 @@ def handle_image_information(
 
     area = geojson_to_wkt(area)
 
-    result = api.query(
+    try:
+        result = api.query(
                     area=area,
                     date=(date, "NOW"),
                     order_by="cloudcoverpercentage",
@@ -67,7 +68,10 @@ def handle_image_information(
                     orbitdirection='DESCENDING',
                     limit=1,
                     platformname=platformname)
+    except Exception as e:
+        print(e)
     
+
     if result:
         id = list(result.keys())[0]
         iterator = dict(result[id])
