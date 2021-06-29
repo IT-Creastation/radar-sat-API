@@ -69,7 +69,7 @@ def handle_image_information(
                     order_by="cloudcoverpercentage",
                     cloudcoverpercentage=(0, cloudCoverage),
                     orbitdirection='DESCENDING',
-                    limit=10,
+                    limit=20,
                     platformname=platformname)
 
         print("[ImageDownloader] Queried Sentinel API without errors")
