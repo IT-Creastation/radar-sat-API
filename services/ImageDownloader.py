@@ -6,6 +6,8 @@ PASSWORD = os.getenv("PASSWORD")
 NAME = os.getenv("NAME")
 api = SentinelAPI(NAME, PASSWORD)
 
+print(NAME, PASSWORD)
+
 
 def download_image(userId: int, imageId: int, imageTitle: str):
     """
@@ -24,13 +26,12 @@ def download_image(userId: int, imageId: int, imageTitle: str):
 
 
 def handle_image_information(
-            date: str,
-            location: dict,
-            cloudCoverage: float,
-            userId:int,
-            platformname: str = "Sentinel-1",
+        date: str,
+        location: dict,
+        cloudCoverage: float,
+        userId: int,
+        platformname: str = "Sentinel-1"):
 
-        ):
     """
     This function take 4 arguments:
 
@@ -70,7 +71,6 @@ def handle_image_information(
                     platformname=platformname)
     except Exception as e:
         print(e)
-    
 
     if result:
         id = list(result.keys())[0]
@@ -85,7 +85,10 @@ def handle_image_information(
                         "cloudcoverpercentage"
                     }
                 }
-   
-        return {**res, "id": id,"path":f"./DB/images/{userId}/{res['title']}.zip"}
+
+        return {
+            **res,
+            "id": id,
+            "path": f"./DB/images/{userId}/{res['title']}.zip"}
     else:
         raise Exception("we couldn't find image for the given criteria")
