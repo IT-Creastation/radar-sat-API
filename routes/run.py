@@ -31,14 +31,21 @@ def handle_cron_request(db: Session = Depends(get_db)):
 
                 downloaded.append({user.id: info["title"]})
 
-            #try:
-            #    store_user_image(db, ImageCreate(
-            #        path=info["path"], name=info["title"], product_id=info["id"]), user_id=user.id)
+                try:
+                    store_user_image(db, ImageCreate(
+                        path=info["path"], name=info["title"], product_id=info["id"]), user_id=user.id)
+                except Exception as e:
+                    print("Couldn't save image to db")
+                    print(e)
+                    continue
             except Exception as ex:
                 errors.append(ex)
                 continue
         print(downloaded)
-        return {"status": "batch operation successfully completed"}
+        return {
+            "status": "batch operation successfully completed",
+            "data": downloaded
+        }
     except Exception as ex:
         errors.append(ex)
         return errors

@@ -75,7 +75,7 @@ def handle_image_information(
         print(e)
 
     if result:
-        print("[ImageDownloader] result is not empty, starting saving to db")
+        print("[ImageDownloader] result is not empty, parsing result")
         id = list(result.keys())[0]
         iterator = dict(result[id])
         res = {
