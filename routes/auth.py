@@ -25,13 +25,13 @@ def login(
     <p style="margin-left:5%">(String,Required):Your name provided when you have created a new account</p>
     <h5>password :</h5>
     <p style="margin-left:5%">(String,Required):Your account password </p>
-    """    
+    """
     user = db.query(User).filter(User.email == request.username).first()
     if user:
         if pwd_context.verify(request.password, user.password):
             access_token = create_access_token(
                 data={"sub": user.email})
-            return {"access_token": access_token, "token_type": "bearer"}
+            return {"access_token": access_token, "token_type": "bearer", "user": user}
         else:
             raise HTTPException(
                 status_code=status.HTTP_406_NOT_ACCEPTABLE,
