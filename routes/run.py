@@ -18,10 +18,9 @@ def handle_cron_request(db: Session = Depends(get_db)):
     downloaded = []
     try:
         users = index(db)
-        print("lqkfsdj")
         print(users)
-        print(os.getenv("NAME"), os.getenv("PASSWORD"))
         for user in users:
+            print("Iterating over users, trying to download images infos")
             try:
                 info = handle_image_information(
                     user.download_image_from,
@@ -29,13 +28,16 @@ def handle_cron_request(db: Session = Depends(get_db)):
                     user.cloud_coverage,
                     userId=user.id,
                     platformname=user.satellite)
-                downloaded.append(info)
+
+                downloaded.append({user.id: info["title"]})
+
             #try:
             #    store_user_image(db, ImageCreate(
             #        path=info["path"], name=info["title"], product_id=info["id"]), user_id=user.id)
             except Exception as ex:
                 errors.append(ex)
                 continue
+        print(downloaded)
         return {"status": "batch operation successfully completed"}
     except Exception as ex:
         errors.append(ex)

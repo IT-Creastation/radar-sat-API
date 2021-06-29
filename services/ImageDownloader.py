@@ -69,10 +69,12 @@ def handle_image_information(
                     orbitdirection='DESCENDING',
                     limit=1,
                     platformname=platformname)
+        print("[ImageDownloader] querying sentinel api without errors")
     except Exception as e:
         print(e)
 
     if result:
+        print("[ImageDownloader] result is not empty, starting saving to db")
         id = list(result.keys())[0]
         iterator = dict(result[id])
         res = {
