@@ -59,6 +59,8 @@ def handle_image_information(
 
     area = geojson_to_wkt(area)
 
+    returned_images = dict()
+
     try:
         print("[ImageDownloader] Querying Sentinel API")
         result = api.query(
@@ -67,31 +69,29 @@ def handle_image_information(
                     order_by="cloudcoverpercentage",
                     cloudcoverpercentage=(0, cloudCoverage),
                     orbitdirection='DESCENDING',
-                    limit=1,
+                    limit=10,
                     platformname=platformname)
-        print(result)
+
         print("[ImageDownloader] Queried Sentinel API without errors")
     except Exception as e:
         print(e)
 
     if result:
         print("[ImageDownloader] result is not empty, parsing result")
-        id = list(result.keys())[0]
-        iterator = dict(result[id])
-        res = {
-                key: iterator[key] for key in iterator.keys()
-                and {
-                        "summary",
-                        "title",
-                        "platformname",
-                        "size",
-                        "cloudcoverpercentage"
-                    }
-                }
 
-        return {
-            **res,
-            "id": id,
-            "path": f"./DB/images/{userId}/{res['title']}.zip"}
+        to_keep = [
+            "summary",
+            "title",
+            "platformname",
+            "size",
+            "cloudcoverpercentage"]
+
+        for id, image_data in result.items():
+            returned_images[id] = {
+                key: image_data[key] for key in to_keep
+            }
+            returned_images[id]["path"] = f"./DB/images/{userId}/{image_data['title']}.zip"
+
+        return returned_images
     else:
         raise Exception("we couldn't find image for the given criteria")
