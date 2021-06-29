@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from services.ImageDownloader import handle_image_information
 router = APIRouter(prefix="/run")
 
-
+import os
 @router.post("/")
 def handle_cron_request(db: Session = Depends(get_db)):
     """
@@ -20,6 +20,7 @@ def handle_cron_request(db: Session = Depends(get_db)):
         users = index(db)
         print("lqkfsdj")
         print(users)
+        print(os.getenv("NAME"), os.getenv("PASSWORD"))
         for user in users:
             try:
                 info = handle_image_information(
