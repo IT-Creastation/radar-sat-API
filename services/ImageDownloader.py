@@ -26,12 +26,11 @@ def download_image(userId: int, imageId: int, imageTitle: str):
 
 
 def handle_image_information(
-        date: str,
-        location: dict,
-        cloudCoverage: float,
-        userId: int,
+    date: str,
+    location: dict,
+    cloudCoverage: float,
+    userId: int,
         platformname: str = "Sentinel-1"):
-
     """
     This function take 4 arguments:
 
@@ -61,6 +60,7 @@ def handle_image_information(
     area = geojson_to_wkt(area)
 
     try:
+        print("[ImageDownloader] Querying Sentinel API")
         result = api.query(
                     area=area,
                     date=(date, "NOW"),
@@ -69,7 +69,8 @@ def handle_image_information(
                     orbitdirection='DESCENDING',
                     limit=1,
                     platformname=platformname)
-        print("[ImageDownloader] querying sentinel api without errors")
+        print(result)
+        print("[ImageDownloader] Queried Sentinel API without errors")
     except Exception as e:
         print(e)
 
