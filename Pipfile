@@ -16,6 +16,7 @@ python-jose = "*"
 python-multipart = "*"
 schedule = "*"
 aiofiles = "*"
+fastapi-utils = "*"
 
 [dev-packages]
 flake8 = "*"

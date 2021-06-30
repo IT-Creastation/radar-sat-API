@@ -1,14 +1,9 @@
 from schemas.Image import ImageCreate
 from services.UserService import index, store_user_image
-from DB.database import get_db
-from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from services.ImageDownloader import handle_image_information
-router = APIRouter(prefix="/run")
 
-
-@router.post("/")
-def handle_cron_request(db: Session = Depends(get_db)):
+def handle_cron_request(db: Session):
     """
     This endpoints triggers automatic download of users' images,
     shouldn't be used by clients.
@@ -25,7 +20,6 @@ def handle_cron_request(db: Session = Depends(get_db)):
     response = []
     try:
         users = index(db)
-        print(users)
         for user in users:
             print("Iterating over users, trying to download images infos")
             try:
