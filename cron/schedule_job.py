@@ -9,7 +9,7 @@ load_dotenv()
 def job():
     try:
         response = requests.post(
-            os.getenv("LOCAL")+"/run",
+            os.getenv("LOCAL"+os.getenv('PORT'))+"/run",
             data={'key': 'value'})
         print(response.status_code, response.text)
     except Exception as ex:
